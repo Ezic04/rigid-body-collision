@@ -15,7 +15,7 @@ impl Square {
     fn draw(&self, to_window_cords: Affine2) {
         let window_center = to_window_cords.transform_point2(self.position);
         let window_radius = to_window_cords
-            .transform_vector2(Vec2::new(self.radius, 0.0))
+            .transform_vector2(Vec2::new(self.radius, 0.))
             .x;
         draw_poly(
             window_center.x,
@@ -31,10 +31,10 @@ impl Square {
 impl Default for Square {
     fn default() -> Self {
         let r = 0.5;
-        let density = 10.0;
+        let density = 10.;
         Self {
-            position: Vec2::new(2.0, 2.0),
-            linear_velocity: Vec2::new(1.0, 0.5),
+            position: Vec2::new(2., 2.),
+            linear_velocity: Vec2::new(1., 0.5),
             rotation: 0.0,
             angular_velocity: 0.1 * consts::TAU,
             radius: r,
@@ -71,15 +71,15 @@ impl Default for State {
     fn default() -> Self {
         Self {
             square: Square::default(),
-            time: 0.0,
+            time: 0.,
         }
     }
 }
 
 fn window_coords_transform(window_height: f32) -> Affine2 {
-    let scale = 100.0;
-    Affine2::from_translation(Vec2::new(0.0, window_height))
-        * Affine2::from_scale(scale * Vec2::new(1.0, -1.0))
+    let scale = 100.;
+    Affine2::from_translation(Vec2::new(0., window_height))
+        * Affine2::from_scale(scale * Vec2::new(1., -1.))
 }
 
 #[macroquad::main("Colisions")]
