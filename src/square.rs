@@ -10,27 +10,27 @@ pub struct Square {
     pub rotation: Rad<f32>,
     pub angular_velocity: Rad<f32>,
     pub radius: f32,
-    // pub mass: f32,
+    pub mass: f32,
 }
 
 impl Square {
-    // fn new(
-    //     position: Vec2,
-    //     linear_velocity: Vec2,
-    //     rotation: Rad<f32>,
-    //     angular_velocity: Rad<f32>,
-    //     radius: f32,
-    // ) -> Self {
-    //     let density = 10.;
-    //     Self {
-    //         position,
-    //         linear_velocity,
-    //         rotation,
-    //         angular_velocity,
-    //         radius,
-    //         mass: radius * density,
-    //     }
-    // }
+    fn new(
+        position: Vec2,
+        linear_velocity: Vec2,
+        rotation: Rad<f32>,
+        angular_velocity: Rad<f32>,
+        radius: f32,
+    ) -> Self {
+        let density = 10.;
+        Self {
+            position,
+            linear_velocity,
+            rotation,
+            angular_velocity,
+            radius,
+            mass: radius * density,
+        }
+    }
 
     pub fn draw(&self, to_window_cords: Affine2, color: Color) {
         let window_center = to_window_cords.transform_point2(self.position);
@@ -66,9 +66,7 @@ impl Square {
         std::array::from_fn(|i| {
             self.position
                 + self.radius
-                    * Vec2::from_angle(
-                        rot + consts::FRAC_PI_4 + consts::FRAC_PI_2 * i as f32,
-                    )
+                    * Vec2::from_angle(rot + consts::FRAC_PI_4 + consts::FRAC_PI_2 * i as f32)
         })
     }
 
@@ -90,14 +88,12 @@ impl Square {
 impl Default for Square {
     fn default() -> Self {
         let radius = 0.5;
-        // let density = 10.;
-        Self {
-            position: Vec2::new(2., 2.),
-            linear_velocity: Vec2::new(1., 0.5),
-            rotation: Rad(consts::FRAC_PI_4),
-            angular_velocity: -Rad::two_pi() * 0.1,
+        Self::new(
+            Vec2::new(2., 2.),
+            Vec2::new(1., 0.5),
+            Rad(consts::FRAC_PI_4),
+            -Rad::two_pi() * 0.1,
             radius,
-            // mass: density * radius,
-        }
+        )
     }
 }

@@ -4,30 +4,18 @@ use macroquad::prelude::*;
 
 #[derive(Debug)]
 pub struct State {
-    sq1: Square,
-    sq2: Square,
+    pub sq1: Square,
+    pub sq2: Square,
 }
 
 impl State {
-    pub fn update(&mut self) {
-        let dt = get_frame_time();
+    pub fn update(&mut self, dt: f32) {
         let update_sqare = |sq: &mut Square| {
             sq.position += sq.linear_velocity * dt;
             sq.rotation += sq.angular_velocity * dt;
         };
         update_sqare(&mut self.sq1);
         update_sqare(&mut self.sq2);
-    }
-
-    pub fn draw(&self, to_window_coords: Affine2) {
-        clear_background(WHITE);
-        let color = if Square::detect_collision(&self.sq1, &self.sq2) {
-            PINK
-        } else {
-            BLACK
-        };
-        self.sq1.draw(to_window_coords, color);
-        self.sq2.draw(to_window_coords, color);
     }
 }
 
